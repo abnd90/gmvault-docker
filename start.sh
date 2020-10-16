@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OAUTH_TOKEN="/data/${GMVAULT_EMAIL_ADDRESS}.oauth2"
+PASSWD_FILE="/data/${GMVAULT_EMAIL_ADDRESS}.passwd"
 
 if [ "$GMVAULT_OPTIONS" != "" ]; then
 	echo "Gmvault will run with the following additional options: $GMVAULT_OPTIONS."
@@ -40,8 +40,8 @@ echo "${GMVAULT_FULL_SYNC_SCHEDULE} /app/backup_full.sh" >> $CRONTAB
 echo "${GMVAULT_QUICK_SYNC_SCHEDULE} /app/backup_quick.sh" >> $CRONTAB
 
 # Start app.
-if [ -f $OAUTH_TOKEN ]; then
-	echo "Using OAuth token found at $OAUTH_TOKEN."
+if [ -f $PASSWD_FILE ]; then
+	echo "Using password found at $PASSWD_FILE."
 
 	if [ "$GMVAULT_SYNC_ON_STARTUP" == "yes" ]; then
 		if [ -d /data/db ]; then
@@ -59,15 +59,15 @@ if [ -f $OAUTH_TOKEN ]; then
 fi
 
 echo "#############################"
-echo "#   OAUTH SETUP REQUIRED!   #"
+echo "# PASSWORD SETUP REQUIRED!  #"
 echo "#############################"
 echo ""
-echo "No Gmail OAuth token found at $OAUTH_TOKEN."
+echo "No Gmail password found at $PASSWD_FILE."
 echo "Please set it up with the following instructions:"
 echo "  1/ Attach a terminal to your container."
 echo "  2/ Run this command:"
-echo "     su -c 'gmvault sync -d /data $GMVAULT_EMAIL_ADDRESS' gmvault"
-echo "  3/ Go to the URL indicated, and copy the token back."
+echo "     su -c 'gmvault sync -p --store-passwd -d /data $GMVAULT_EMAIL_ADDRESS' gmvault"
+echo "  3/ Enter the app password created in your google account."
 echo "  4/ Once the synchronization process starts, restart the container."
 
 /bin/bash
