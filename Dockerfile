@@ -17,7 +17,7 @@ RUN apk add --update \
 		bash \
 		ca-certificates \
 		mailx \
-		py-pip \
+		py2-pip \
 		python2 \
 		ssmtp \
 		shadow \
