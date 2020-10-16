@@ -18,7 +18,7 @@ RUN apk add --update \
 		ca-certificates \
 		mailx \
 		py-pip \
-		python \
+		python2 \
 		ssmtp \
 		shadow \
 		su-exec \
